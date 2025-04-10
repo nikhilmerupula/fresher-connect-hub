@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -40,6 +41,7 @@ const SignUp = () => {
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const interestOptions = ["Academics", "Career", "Research", "Internships", "Campus Life", 
     "Housing", "Clubs", "Sports", "Mental Health", "Study Abroad"];
@@ -84,27 +86,53 @@ const SignUp = () => {
 
     setIsLoading(true);
     
-    // Simulate API call
+    // Mock user registration - in a real app, you would save to a database
     setTimeout(() => {
       setIsLoading(false);
+      
+      // Store user info in localStorage for demo purposes
+      localStorage.setItem('user', JSON.stringify({
+        username: values.username,
+        email: values.email,
+        role: values.role,
+        interests: selectedInterests,
+        isLoggedIn: true
+      }));
+      
       toast({
-        title: "Verification link sent!",
-        description: "Please check your college email to continue.",
+        title: "Welcome to FreshersHub!",
+        description: "Your account has been created successfully.",
       });
-    }, 1500);
+      
+      // Redirect to questions page after successful signup
+      navigate('/questions');
+    }, 1000);
   };
 
   const handleLoginSubmit = (values: LoginFormValues) => {
     setIsLoading(true);
     
-    // Simulate API call
+    // For demo purposes, we'll simulate a successful login
     setTimeout(() => {
       setIsLoading(false);
+      
+      // In a real app, you would verify credentials against a database
+      // For now, we'll create a mock user
+      localStorage.setItem('user', JSON.stringify({
+        username: "DemoUser",
+        email: values.email,
+        role: "fresher",
+        isLoggedIn: true
+      }));
+      
       toast({
-        title: "Login link sent!",
-        description: "Please check your email for a magic login link.",
+        title: "Welcome back!",
+        description: "You have successfully logged in.",
       });
-    }, 1500);
+      
+      // Redirect to questions page after successful login
+      navigate('/questions');
+    }, 1000);
   };
 
   return (
@@ -148,9 +176,6 @@ const SignUp = () => {
                                   />
                                 </FormControl>
                               </div>
-                              <p className="text-xs text-muted-foreground">
-                                We'll send a verification link to this email
-                              </p>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -324,12 +349,12 @@ const SignUp = () => {
                           </div>
                         ) : (
                           <div className="flex items-center">
-                            Send Login Link <ArrowRight className="ml-2 h-4 w-4" />
+                            Log In <ArrowRight className="ml-2 h-4 w-4" />
                           </div>
                         )}
                       </Button>
                       <p className="text-xs text-center text-muted-foreground mt-4">
-                        We'll email you a magic link to log in
+                        Quick login for demo purposes
                       </p>
                     </div>
                   </form>
