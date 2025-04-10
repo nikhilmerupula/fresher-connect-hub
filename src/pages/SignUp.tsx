@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -17,8 +16,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const signupSchema = z.object({
-  email: z.string().email("Please enter a valid college email").endsWith(".edu", {
-    message: "Must be a college email ending with .edu"
+  email: z.string().email("Please enter a valid college email").endsWith("@gvpce.ac.in", {
+    message: "Must be a GVPCE college email ending with @gvpce.ac.in"
   }),
   username: z.string().min(3, "Username must be at least 3 characters").max(20, "Username cannot exceed 20 characters"),
   role: z.enum(["fresher", "senior", "alumni", "faculty"], {
@@ -29,8 +28,8 @@ const signupSchema = z.object({
 type SignupFormValues = z.infer<typeof signupSchema>;
 
 const loginSchema = z.object({
-  email: z.string().email("Please enter a valid college email").endsWith(".edu", {
-    message: "Must be a college email ending with .edu"
+  email: z.string().email("Please enter a valid college email").endsWith("@gvpce.ac.in", {
+    message: "Must be a GVPCE college email ending with @gvpce.ac.in"
   }),
 });
 
