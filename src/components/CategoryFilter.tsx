@@ -18,7 +18,7 @@ export const CategoryFilter = ({
         variant={activeCategory === "all" ? "default" : "outline"}
         size="sm"
         onClick={() => onSelectCategory("all")}
-        className="rounded-full"
+        className="rounded-full hover:bg-primary/90 transition-colors"
       >
         All
       </Button>
@@ -28,7 +28,7 @@ export const CategoryFilter = ({
           variant={activeCategory === category ? "default" : "outline"}
           size="sm"
           onClick={() => onSelectCategory(category)}
-          className="rounded-full"
+          className="rounded-full hover:bg-primary/10 transition-colors"
         >
           #{category}
         </Button>

@@ -10,7 +10,7 @@ interface FeatureCardProps {
 
 export const FeatureCard = ({ icon: Icon, title, description }: FeatureCardProps) => {
   return (
-    <Card className="hover-scale card-shadow">
+    <Card className="hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg border-primary/10">
       <CardHeader>
         <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
           <Icon className="h-6 w-6 text-primary" />

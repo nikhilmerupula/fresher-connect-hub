@@ -4,6 +4,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ThumbsUp, Clock } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface QuestionCardProps {
   id: string;
@@ -25,11 +27,32 @@ export const QuestionCard = ({
   username,
   userType,
   replies,
-  likes,
+  likes: initialLikes,
   timeAgo,
 }: QuestionCardProps) => {
+  const [likes, setLikes] = useState(initialLikes);
+  const [liked, setLiked] = useState(false);
+  const { toast } = useToast();
+
+  const handleLike = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!liked) {
+      setLikes(prev => prev + 1);
+      setLiked(true);
+      toast({
+        title: "Question liked",
+        description: "Thank you for your feedback!",
+      });
+    } else {
+      setLikes(prev => prev - 1);
+      setLiked(false);
+    }
+  };
+
   return (
-    <Card className="hover-scale card-shadow h-full flex flex-col">
+    <Card className="hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg h-full flex flex-col">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start mb-2">
           <Badge variant="outline" className="bg-primary/10 hover:bg-primary/20">
@@ -59,14 +82,17 @@ export const QuestionCard = ({
           </Badge>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center">
+          <div 
+            className={`flex items-center cursor-pointer ${liked ? 'text-primary' : ''}`}
+            onClick={handleLike}
+          >
             <ThumbsUp className="h-3 w-3 mr-1" />
             {likes}
           </div>
-          <div className="flex items-center">
+          <Link to={`/questions/${id}`} className="flex items-center hover:text-primary">
             <MessageCircle className="h-3 w-3 mr-1" />
             {replies}
-          </div>
+          </Link>
         </div>
       </CardFooter>
     </Card>
