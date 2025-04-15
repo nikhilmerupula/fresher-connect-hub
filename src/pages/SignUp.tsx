@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -9,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Fingerprint, User, School, ArrowRight } from "lucide-react";
+import { Mail, Fingerprint, User, School, ArrowRight, Lock, Eye, EyeOff } from "lucide-react";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -20,6 +21,12 @@ const signupSchema = z.object({
     message: "Must be a GVPCE college email ending with @gvpce.ac.in"
   }),
   username: z.string().min(3, "Username must be at least 3 characters").max(20, "Username cannot exceed 20 characters"),
+  password: z.string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[!@#$%^&*()]/, "Password must contain at least one special character"),
   role: z.enum(["fresher", "senior", "alumni", "faculty"], {
     required_error: "Please select your role",
   }),
@@ -31,6 +38,7 @@ const loginSchema = z.object({
   email: z.string().email("Please enter a valid college email").endsWith("@gvpce.ac.in", {
     message: "Must be a GVPCE college email ending with @gvpce.ac.in"
   }),
+  password: z.string().min(1, "Password is required"),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -39,6 +47,10 @@ const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const [showPassword, setShowPassword] = useState({
+    signup: false,
+    login: false,
+  });
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -50,6 +62,7 @@ const SignUp = () => {
     defaultValues: {
       email: "",
       username: "",
+      password: "",
       role: "fresher",
     },
   });
@@ -58,6 +71,7 @@ const SignUp = () => {
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
+      password: "",
     },
   });
 
@@ -134,6 +148,13 @@ const SignUp = () => {
     }, 1000);
   };
 
+  const togglePasswordVisibility = (type: 'signup' | 'login') => {
+    setShowPassword(prev => ({
+      ...prev,
+      [type]: !prev[type]
+    }));
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -168,7 +189,7 @@ const SignUp = () => {
                                 <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                                 <FormControl>
                                   <Input 
-                                    placeholder="yourname@college.edu" 
+                                    placeholder="yourname@gvpce.ac.in" 
                                     className="pl-10" 
                                     {...field} 
                                     disabled={isLoading}
@@ -204,6 +225,39 @@ const SignUp = () => {
                           )}
                         />
                       </div>
+                      
+                      <FormField
+                        control={signupForm.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem className="space-y-2">
+                            <FormLabel>Password</FormLabel>
+                            <div className="relative">
+                              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                              <FormControl>
+                                <Input 
+                                  type={showPassword.signup ? "text" : "password"}
+                                  placeholder="Create a strong password" 
+                                  className="pl-10 pr-10" 
+                                  {...field}
+                                  disabled={isLoading}
+                                />
+                              </FormControl>
+                              <button 
+                                type="button"
+                                className="absolute right-3 top-3 text-muted-foreground"
+                                onClick={() => togglePasswordVisibility('signup')}
+                              >
+                                {showPassword.signup ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </button>
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              At least 8 characters, including uppercase, lowercase, number, and special character
+                            </p>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                       
                       <div className="space-y-2">
                         <FormField
@@ -323,12 +377,42 @@ const SignUp = () => {
                               <FormControl>
                                 <Input 
                                   type="email" 
-                                  placeholder="yourname@college.edu" 
+                                  placeholder="yourname@gvpce.ac.in" 
                                   className="pl-10" 
                                   {...field} 
                                   disabled={isLoading}
                                 />
                               </FormControl>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={loginForm.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem className="space-y-2">
+                            <FormLabel>Password</FormLabel>
+                            <div className="relative">
+                              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                              <FormControl>
+                                <Input 
+                                  type={showPassword.login ? "text" : "password"}
+                                  placeholder="Enter your password" 
+                                  className="pl-10 pr-10" 
+                                  {...field}
+                                  disabled={isLoading}
+                                />
+                              </FormControl>
+                              <button 
+                                type="button"
+                                className="absolute right-3 top-3 text-muted-foreground"
+                                onClick={() => togglePasswordVisibility('login')}
+                              >
+                                {showPassword.login ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </button>
                             </div>
                             <FormMessage />
                           </FormItem>
