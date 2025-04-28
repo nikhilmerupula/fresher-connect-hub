@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 
 export const Footer = () => {
@@ -7,7 +6,7 @@ export const Footer = () => {
       <div className="container px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-primary">FreshersHub</h3>
+            <h3 className="text-lg font-semibold mb-4 text-primary">Student Connect</h3>
             <p className="text-sm text-muted-foreground">
               Connect anonymously with seniors, professors, and alumni for guidance and support.
             </p>
@@ -65,7 +64,7 @@ export const Footer = () => {
           </div>
         </div>
         <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} FreshersHub. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Student Connect. All rights reserved.</p>
         </div>
       </div>
     </footer>
