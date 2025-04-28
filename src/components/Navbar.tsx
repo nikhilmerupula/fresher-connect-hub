@@ -13,7 +13,7 @@ export const Navbar = () => {
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <span className="text-xl font-bold bg-gradient-to-r from-fresher-purple to-fresher-teal bg-clip-text text-transparent">
-            FreshersHub
+            Student Connect
           </span>
         </Link>
         

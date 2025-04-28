@@ -9,7 +9,7 @@ export const HeroSection = () => {
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-fresher-purple via-fresher-teal to-fresher-orange bg-clip-text text-transparent animate-pulse-slow">
-              Anonymous Freshers' Hub
+              Student Connect
             </h1>
             <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
               Connect with seniors, professors, and alumni while maintaining your privacy. 
