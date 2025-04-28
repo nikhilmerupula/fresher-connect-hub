@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -113,7 +112,7 @@ const SignUp = () => {
       }));
       
       toast({
-        title: "Welcome to FreshersHub!",
+        title: "Welcome to Student Connect!",
         description: "Your account has been created successfully.",
       });
       
@@ -162,7 +161,7 @@ const SignUp = () => {
       <main className="flex-grow container max-w-4xl px-4 md:px-6 py-12">
         <Card className="mx-auto">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">Join FreshersHub</CardTitle>
+            <CardTitle className="text-2xl font-bold">Join Student Connect</CardTitle>
             <CardDescription>
               Connect with your college community while staying anonymous
             </CardDescription>
@@ -350,7 +349,7 @@ const SignUp = () => {
                           </div>
                         ) : (
                           <div className="flex items-center">
-                            Join FreshersHub <ArrowRight className="ml-2 h-4 w-4" />
+                            Join Student Connect <ArrowRight className="ml-2 h-4 w-4" />
                           </div>
                         )}
                       </Button>
