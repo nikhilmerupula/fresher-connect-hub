@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { HeroSection } from "@/components/HeroSection";
@@ -29,7 +28,7 @@ const Index = () => {
         <section className="py-16 bg-background">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-              <h2 className="text-3xl font-bold tracking-tighter">Why FreshersHub?</h2>
+              <h2 className="text-3xl font-bold tracking-tighter">Why Student Connect?</h2>
               <p className="text-muted-foreground md:text-lg max-w-[800px]">
                 Our platform provides a safe space for students to connect, learn, and grow through anonymous interactions.
               </p>
